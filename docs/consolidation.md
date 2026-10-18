@@ -41,7 +41,7 @@ Proposal generation runs through the following steps:
 3. Compute pairwise cosine similarity within each type group. A pair becomes a
    merge candidate when its similarity is above `typeThresholds[type]`.
 4. Optionally, an LLM judge reviews the candidate pairs and answers YES/NO for
-   each, capped at `maxJudgePairs`. If the chat backend is unavailable, no merge
+   each, capped at `maxJudgePairs`. If the LLM backend is unavailable, no merge
    groups are built — archive candidates are still proposed.
 5. Build merge groups from the accepted pairs using union-find, so overlapping
    pairs collapse into a single group.

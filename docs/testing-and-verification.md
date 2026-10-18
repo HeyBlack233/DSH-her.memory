@@ -23,7 +23,7 @@ verification checklist performed against a dedicated profile.
 
 | Behavior | What it verifies |
 |---|---|
-| Success | Well-formed embeddings and chat responses are parsed correctly |
+| Success | Well-formed embedding and LLM responses are parsed correctly |
 | HTTP error | Non-2xx responses surface as typed backend errors |
 | Timeout | Unresponsive backends fail fast with a clear timeout error |
 | Malformed | Truncated or invalid payloads are rejected without corrupting state |

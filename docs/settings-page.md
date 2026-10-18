@@ -33,13 +33,13 @@ confirmation, and proposal review are inline panels.
   `status.backend`, with `config.backend.kind` deciding "not configured".
 - Stats grid: active, archived, pending compaction, total, active-file size,
   version short id, last maintenance.
-- Backend card: kind, embedding model/URL, chat model/URL, last test result.
+- Backend card: kind, embedding model/URL, LLM model/URL, last test result.
 - Quick actions: Test connection, Run maintenance, Backfill embeddings,
   Recompute stamp.
 - Empty state when the store has no active memories: explain that the model
   uses the her-memory skills and the four memory tools.
-- A last-error banner shows the localized error text plus the raw detail when it
-  adds information.
+- A last-error banner shows the localized error text; for validation errors it
+  also shows the localized field detail, never a raw server message.
 
 ### Memories
 
@@ -78,7 +78,7 @@ confirmation, and proposal review are inline panels.
 ### Settings
 
 - Connection: backend kind (`ollama`, `llama-cpp`, `openai-compatible`, `none`),
-  embedding URL/model/timeout, chat URL/model/timeout, API key fields with
+  embedding URL/model/timeout, LLM URL/model/timeout, API key fields with
   "unchanged" placeholders and a Clear key checkbox. A preset button fills the
   default URLs/models for the selected kind. Test connection; Save.
 - Search defaults: `defaultTopK`, `maxTopK`, `minSimilarity`,
@@ -114,7 +114,7 @@ localhost by default.
 |---|---|---|
 | `state` | `{}` | Full state. |
 | `config.save` | Partial config patch | Fresh state. `apiKeySet` markers are stripped; `apiKey` strings are the only secret fields. Omit a key to keep it; send `""` to clear it. |
-| `backend.test` | `{ chat: true }` | `{ embedding: { ok, latencyMs, dimensions, model }, chat: { ok, latencyMs, model } }`; `chat: false` skips the chat probe. |
+| `backend.test` | `{ chat: true }` | `{ embedding: { ok, latencyMs, dimensions, model }, chat: { ok, latencyMs, model } }`; `chat: false` skips the LLM probe; the request and response keys keep the name `chat`. |
 | `memories.search` | `{ query, topK?, category?, type?, includeArchived? }` | `{ query, retrievalMode, results, warnings }`. Settings searches do not log retrieval hits. |
 | `memories.list` | `{ query?, category?, type?, includeArchived?, offset?, limit? }` | `{ items, total, offset, limit }`. |
 | `memories.add` | `{ text, type?, category?, eventDate?, projectKey?, dedupe? }` | `{ added, id, duplicateId, hasEmbedding, warnings }`. |

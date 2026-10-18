@@ -12,7 +12,7 @@ runtime skills, and a localized settings page to the DSH Web GUI.
 
 - DeepSeek Harness with the Web GUI.
 - Node.js 22 or newer.
-- Optional: a local embedding/chat backend such as Ollama or llama.cpp. Without
+- Optional: a local embedding/LLM backend such as Ollama or llama.cpp. Without
   one, memory still works in keyword-only mode and embeddings can be backfilled
   later.
 

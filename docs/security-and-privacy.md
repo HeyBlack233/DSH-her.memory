@@ -24,7 +24,7 @@ web pages from driving the API.
 
 ## Secrets
 
-Embedding and chat backend API keys are stored in `config.json` in the plugin
+Embedding and LLM backend API keys are stored in `config.json` in the plugin
 home:
 
 - The file is created with `0600` permissions where the platform supports them.
@@ -44,7 +44,7 @@ responses, or debug output; only the presence of a key is ever disclosed.
 - Snapshots preserve the exact store state before destructive operations
   (consolidation execution, restore, and permanent delete).
 - Storage is local-first. The only text that leaves the machine is the memory
-  content sent to the configured embedding or chat backend; no other service
+  content sent to the configured embedding or LLM backend; no other service
   receives it.
 
 ### Data flow summary
@@ -53,7 +53,7 @@ responses, or debug output; only the presence of a key is ever disclosed.
 |---|---|---|
 | Search | Local JSONL and stored embeddings | Query text to the embedding backend |
 | Add / update | Local JSONL | New text to the embedding backend |
-| Consolidation judge | Candidate pair texts | Candidate pairs to the chat backend |
+| Consolidation judge | Candidate pair texts | Candidate pairs to the LLM backend |
 
 ## Consent
 

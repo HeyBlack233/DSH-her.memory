@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- The settings page and documentation now call the consolidation text-generation backend the "LLM" backend instead of "chat"/"对话". The configuration key remains `backend.chat` for compatibility with her.memory and the chat-completions wire shape.
 - API error details in the settings page now render localized, field-level messages instead of raw English server text; unknown codes fall back to the localized generic error.
 
 ### Fixed

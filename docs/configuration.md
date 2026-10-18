@@ -140,6 +140,11 @@ invalid value rejects the whole configuration with `INVALID_INPUT` and a
 Allowing empty URL and model under `kind: "none"` lets the settings page clear
 fields without making the configuration unsavable.
 
+`backend.chat` is the text-generation model used only by consolidation's LLM
+judge: it answers YES/NO on candidate merge pairs and is never used for user
+conversation. The key keeps the name `chat` for compatibility with her.memory
+and the chat-completions wire shape; the settings page calls it the LLM backend.
+
 ### Search
 
 | Key | Type | Default | Validation |
@@ -269,7 +274,7 @@ Presets are the values the settings page offers when the user picks a backend
 kind. Loading a configuration never rewrites URLs or models, so every value in
 `config.json` is authoritative.
 
-| Kind | Embedding URL | Embedding model | Chat URL | Chat model |
+| Kind | Embedding URL | Embedding model | LLM URL | LLM model |
 |---|---|---|---|---|
 | `ollama` | `http://127.0.0.1:11434/api/embeddings` | `bge-m3` | `http://127.0.0.1:11434/api/generate` | `qwen2.5:7b` |
 | `llama-cpp` | `http://127.0.0.1:8080/v1/embeddings` | `bge-m3` | `http://127.0.0.1:8081/v1/chat/completions` | `qwen2.5:7b` |
@@ -281,7 +286,7 @@ kind. Loading a configuration never rewrites URLs or models, so every value in
 - `openai-compatible` is any server speaking the OpenAI wire shape. The preset
   points at a local server; for a hosted provider, change the URLs and models
   and set `apiKey`.
-- `none` makes no embedding or chat request. Search is keyword-only, and
+- `none` makes no embedding or LLM request. Search is keyword-only, and
   consolidation proposes archive candidates without an LLM judge.
 - Switching kind does not migrate embeddings. After a switch, run
   `backfill --all` so the corpus uses one vector space.

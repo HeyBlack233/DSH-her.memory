@@ -8,9 +8,8 @@ and state files are specified in
 [`configuration.md`](configuration.md); proposal documents are specified in
 [`consolidation.md`](consolidation.md).
 
-`lib/store.js` is the source of truth for the mechanics below. Where
-[`implementation-plan.md`](implementation-plan.md) leaves a storage detail open,
-this document records the implemented behavior.
+`lib/store.js` is the source of truth for the mechanics below; this document
+records the implemented behavior.
 
 ## File layout
 

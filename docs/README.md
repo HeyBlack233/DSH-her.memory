@@ -19,4 +19,3 @@ document covers exactly one concern. All documents are written in English.
 | [security-and-privacy.md](security-and-privacy.md) | Local API trust checks, secret handling, consent, and destructive actions. |
 | [testing-and-verification.md](testing-and-verification.md) | Test strategy, fake backend, commands, and live verification. |
 | [verification-profile.md](verification-profile.md) | Creating and running the separate `her-memory-test` profile. |
-| [implementation-plan.md](implementation-plan.md) | Milestones, file ownership, contracts, and acceptance criteria. |

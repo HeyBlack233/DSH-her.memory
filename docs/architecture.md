@@ -7,8 +7,8 @@ in [`data-model.md`](data-model.md), ranking in [`retrieval.md`](retrieval.md),
 configuration in [`configuration.md`](configuration.md), and the page, tools,
 skills, and consolidation workflow in their own documents.
 
-Details that [`implementation-plan.md`](implementation-plan.md) leaves open are
-specified here as the intended design.
+The topic documents in [`README.md`](README.md) are authoritative for their
+respective areas; this document describes the shape that connects them.
 
 ## Purpose
 

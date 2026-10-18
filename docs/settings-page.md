@@ -184,8 +184,11 @@ probe or a failed embedding path.
 
 ## Error codes
 
-The client maps stable codes to localized sentences and shows the raw message
-as a detail when it differs. Known codes: `INVALID_INPUT`, `STORE_LOCKED`,
+The client maps stable codes to localized sentences. For `INVALID_INPUT` it
+also renders a localized field detail derived from `details.path` and
+`details.reason`; other codes render the localized sentence alone. Raw server
+messages never appear in the page, and an unknown code falls back to
+`errors.UNKNOWN`. Known codes: `INVALID_INPUT`, `STORE_LOCKED`,
 `STORE_IO`, `NOT_FOUND`, `DUPLICATE`, `BACKEND_UNAVAILABLE`,
 `EMBEDDING_FAILED`, `CHAT_FAILED`, `PROPOSAL_NOT_FOUND`,
 `PROPOSAL_NOT_EXECUTED`, `SNAPSHOT_NOT_FOUND`, `IMPORT_INVALID`,

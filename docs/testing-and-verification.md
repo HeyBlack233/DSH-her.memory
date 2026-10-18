@@ -64,26 +64,38 @@ results are reproducible:
 
 1. Install the plugin into the `her-memory-test` profile.
 2. Open the settings page and confirm the plugin row is active.
-3. Check the Memory settings entry renders in both English and Chinese.
-4. Save the configuration and run the connectivity test against the configured
-   backend.
-5. Add, search, update, and archive memories through the API and the tools.
-6. Run maintenance and confirm archive/stats behavior.
-7. Generate a proposal, approve it, execute it, and restore it.
-8. Export and import the memory store.
-9. Verify that the four tools (`memory_search`, `memory_add`, `memory_update`,
+3. Check the Memory settings entry renders in both English and Chinese, and
+   switch the language while the page is open.
+4. Walk all four tabs. On Overview, run maintenance and a backend test. On
+   Memories, copy an ID, add a memory, search it, edit it, archive it, include
+   archived entries, and delete it permanently. On Curation, run maintenance,
+   generate a proposal, open it, and confirm the empty-selection guard. On
+   Settings, save a valid configuration, enter an invalid one and confirm the
+   localized field error, then export and import a JSONL file.
+5. Exercise the same operations through the four model tools and compare the
+   results with the UI.
+6. Execute an approved proposal, then restore its snapshot; confirm state and
+   stats return to the pre-execution values.
+7. Export and import through the API as well as the Settings tab.
+8. Verify that the four tools (`memory_search`, `memory_add`, `memory_update`,
    `memory_archive`) and the four skills (`her-memory`, `memory-recall`,
    `memory-capture`, `memory-curation`) are registered and usable by a real
    agent.
-10. Confirm no slot crashes and that data is written under `$DSH_HOME/her-memory`.
+9. Confirm no slot crashes and that data is written under `$DSH_HOME/her-memory`.
 
-### What cannot be verified without browser control
+### Browser pass
 
-Some checks require an interactive browser and are reported explicitly rather
-than silently skipped: visual layout of the settings tabs, sidebar rendering and
-theme tokens, drag-and-drop or mouse interactions in the Curation tab, and
-translation key fallback behavior in a live session. These are noted as manual
-steps in the verification report rather than claimed as verified.
+When a Chromium build with the DevTools protocol is available, the browser pass
+can be automated: navigate to the profile's token URL, open Settings, drive the
+slot with DOM queries and mouse events, and capture screenshots plus console and
+exception events. Check that the `settings.section` slot does not crash, that
+each tab renders its cards, and that the page follows a locale switch without a
+reload. Without browser automation these steps are performed manually; do not
+claim them as verified from API checks alone.
+
+The browser pass does not replace the automated suite. It catches rendering and
+interaction defects (undefined bindings, missing keys, broken confirmations) that
+unit tests cannot see.
 
 ## Cleanup
 

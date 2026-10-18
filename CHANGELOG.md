@@ -22,4 +22,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugin-owned `config.json` with live updates, backend adapters for Ollama, llama.cpp/OpenAI-compatible, and keyword-only mode, plus embedding backfill.
 - Unit and integration tests with a local fake backend, and a separate `her-memory-test` verification profile workflow.
 
+### Changed
+
+- API error details in the settings page now render localized, field-level messages instead of raw English server text; unknown codes fall back to the localized generic error.
+
+### Fixed
+
+- The Memories tab no longer crashes the whole settings section: the copy-ID button referenced an undefined `title` binding.
+
 ### Contributors

@@ -78,6 +78,21 @@ reader:
 - The dictionaries are registered in an effect and removed when the plugin
   unloads.
 
+## API errors
+
+The primary sentence comes from the `errors.<CODE>` dictionary. Validation
+errors (`INVALID_INPUT`) carry a `details.path` and, for config and lifecycle
+checks, a machine-stable `details.reason`. The page maps both through
+`FIELD_LABEL_KEYS` and `reasonText` so the user sees a localized sentence such as
+"Default top K must not exceed the maximum top K" rather than the host's English
+message.
+
+Raw `error.message` text is never rendered in the settings page. Codes without a
+dictionary entry fall back to `errors.UNKNOWN`; non-validation diagnostics stay
+in the host console/log. When adding a new validation error on the host side,
+give it a stable `details.reason` and add an `errors.detail.reason.*` key to both
+dictionaries.
+
 ## Model-facing text
 
 Tool descriptions, tool result text, skill bodies, and the system-prompt pointer
@@ -114,4 +129,6 @@ Before finishing a UI change:
 - Exercise the page in both languages, including the sidebar label, and switch
   languages while the page is open.
 - Confirm API error codes map to `errors.<CODE>` keys and that an unknown code
-  falls back to the raw message or `errors.UNKNOWN`.
+  falls back to `errors.UNKNOWN`, never to the raw server message. Check that a
+  new validation reason has a matching `errors.detail.reason.*` key in both
+  dictionaries.

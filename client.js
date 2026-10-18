@@ -510,6 +510,25 @@ window.__ModuleLoader__.load({
 			"errors.NETWORK": "Could not reach the plugin API.",
 			"errors.TIMEOUT": "The request timed out. The operation may still be running.",
 			"errors.UNKNOWN": "Something went wrong.",
+			"errors.detail.invalidField": "Invalid value for {field}.",
+			"errors.detail.reason.number": "{field} must be a number.",
+			"errors.detail.reason.integer": "{field} must be an integer.",
+			"errors.detail.reason.range": "{field} must be between {min} and {max}.",
+			"errors.detail.reason.oneOf": "{field} must be one of: {values}.",
+			"errors.detail.reason.nonEmpty": "{field} must not be empty.",
+			"errors.detail.reason.string": "{field} must be text.",
+			"errors.detail.reason.boolean": "{field} must be true or false.",
+			"errors.detail.reason.object": "{field} must be an object.",
+			"errors.detail.reason.positive": "{field} must be greater than zero.",
+			"errors.detail.reason.topK": "{field} must not exceed the maximum top K.",
+			"errors.detail.reason.schemaVersion": "Only configuration schema version 1 is supported.",
+			"errors.detail.reason.plainObject": "The configuration must be a plain object.",
+			"errors.detail.reason.textRequired": "Memory text must not be empty.",
+			"errors.detail.reason.date": "{field} must be a valid date.",
+			"errors.detail.reason.type": "Memory type is not recognized.",
+			"errors.detail.reason.idRequired": "A memory id is required.",
+			"errors.detail.reason.confirmDelete": "Permanent deletion must be confirmed.",
+			"errors.detail.reason.updateField": "Choose at least one field to update.",
 		};
 
 		const ZH = {
@@ -921,6 +940,58 @@ window.__ModuleLoader__.load({
 			"errors.NETWORK": "无法连接插件 API。",
 			"errors.TIMEOUT": "请求超时，操作可能仍在进行。",
 			"errors.UNKNOWN": "发生未知错误。",
+			"errors.detail.invalidField": "“{field}”的取值无效。",
+			"errors.detail.reason.number": "“{field}”必须是数字。",
+			"errors.detail.reason.integer": "“{field}”必须是整数。",
+			"errors.detail.reason.range": "“{field}”必须在 {min} 和 {max} 之间。",
+			"errors.detail.reason.oneOf": "“{field}”必须是以下之一：{values}。",
+			"errors.detail.reason.nonEmpty": "“{field}”不能为空。",
+			"errors.detail.reason.string": "“{field}”必须是文本。",
+			"errors.detail.reason.boolean": "“{field}”必须为真或假。",
+			"errors.detail.reason.object": "“{field}”必须是对象。",
+			"errors.detail.reason.positive": "“{field}”必须大于零。",
+			"errors.detail.reason.topK": "“{field}”不能超过最大 top K。",
+			"errors.detail.reason.schemaVersion": "仅支持配置架构版本 1。",
+			"errors.detail.reason.plainObject": "配置必须是普通对象。",
+			"errors.detail.reason.textRequired": "记忆内容不能为空。",
+			"errors.detail.reason.date": "“{field}”必须是有效日期。",
+			"errors.detail.reason.type": "记忆类型无法识别。",
+			"errors.detail.reason.idRequired": "必须提供记忆 ID。",
+			"errors.detail.reason.confirmDelete": "必须确认后才能永久删除。",
+			"errors.detail.reason.updateField": "请至少选择一个要更新的字段。",
+		};
+
+		/** Config/lifecycle paths that have a translated field label. */
+		const FIELD_LABEL_KEYS = {
+			text: "fields.text",
+			type: "fields.type",
+			category: "fields.category",
+			eventDate: "fields.eventDate",
+			memoryDir: "fields.memoryDir",
+			"search.defaultTopK": "fields.defaultTopK",
+			"search.maxTopK": "fields.maxTopK",
+			"search.minSimilarity": "fields.minSimilarity",
+			"search.maxResultChars": "fields.maxResultChars",
+			"search.rrfK": "fields.rrfK",
+			"maintenance.energyDecay": "fields.energyDecay",
+			"maintenance.archiveDays": "fields.archiveDays",
+			"maintenance.energyMax": "fields.energyMax",
+			"maintenance.energyHitBoost": "fields.hitBoost",
+			"backend.embedding.url": "fields.embeddingUrl",
+			"backend.embedding.model": "fields.embeddingModel",
+			"backend.embedding.apiKey": "fields.embeddingApiKey",
+			"backend.embedding.timeoutMs": "fields.embeddingTimeout",
+			"backend.chat.url": "fields.chatUrl",
+			"backend.chat.model": "fields.chatModel",
+			"backend.chat.apiKey": "fields.chatApiKey",
+			"backend.chat.timeoutMs": "fields.chatTimeout",
+			"consolidation.triggerCount": "fields.triggerCount",
+			"consolidation.triggerSizeMb": "fields.triggerSizeMb",
+			"consolidation.triggerDays": "fields.triggerDays",
+			"consolidation.typeThresholds.preference": "fields.similarityPreference",
+			"consolidation.typeThresholds.event": "fields.similarityEvent",
+			"consolidation.typeThresholds.emotional": "fields.similarityEmotional",
+			"consolidation.typeThresholds.general": "fields.similarityGeneral",
 		};
 
 		/** Translate an API error, preferring a dictionary entry for its code. */
@@ -928,15 +999,70 @@ window.__ModuleLoader__.load({
 			const code = error && typeof error.code === "string" && error.code.length > 0 ? error.code : "UNKNOWN";
 			const key = "errors." + code;
 			if (Object.prototype.hasOwnProperty.call(EN, key)) return t(key);
-			return error && error.message ? String(error.message) : t("errors.UNKNOWN");
+			return t("errors.UNKNOWN");
 		}
 
-		/** Raw message when it adds detail beyond the localized sentence. */
+		/** Map one server validation reason to a localized sentence. */
+		function reasonText(t, reason, field) {
+			const text = typeof reason === "string" ? reason.trim() : "";
+			if (!text) return "";
+			const exact = {
+				"expected a finite number": "number",
+				"expected an integer": "integer",
+				"expected a non-empty string": "nonEmpty",
+				"expected a string": "string",
+				"expected a boolean": "boolean",
+				"expected an object": "object",
+				"must not exceed search.maxTopK": "topK",
+				"must be greater than zero": "positive",
+				"only schema version 1 is supported": "schemaVersion",
+				"configuration must be a plain object": "plainObject",
+				"Memory text must not be empty": "textRequired",
+				"eventDate must be a valid date": "date",
+				"Memory type must be a string": "type",
+				"Memory id is required": "idRequired",
+				"Permanent delete requires confirm: true": "confirmDelete",
+				"textRequired": "textRequired",
+				"schemaVersion": "schemaVersion",
+				"plainObject": "plainObject",
+				"type": "type",
+				"date": "date",
+				"idRequired": "idRequired",
+				"confirmDelete": "confirmDelete",
+				"updateField": "updateField",
+			};
+			let key = exact[text] || "";
+			const params = { field };
+			if (!key) {
+				const range = /^expected a value between (.+) and (.+)$/.exec(text);
+				if (range) {
+					key = "range";
+					params.min = range[1];
+					params.max = range[2];
+				}
+			}
+			if (!key) {
+				const oneOf = /^expected one of (.+)$/.exec(text);
+				if (oneOf) {
+					key = "oneOf";
+					params.values = oneOf[1];
+				}
+			}
+			if (!key && text.startsWith("update requires at least one of")) key = "updateField";
+			return key ? t("errors.detail.reason." + key, params) : "";
+		}
+
+		/** Localized detail for a validation error; empty for other codes. */
 		function errorDetail(t, error) {
-			if (!error || !error.message) return "";
-			const localized = errorText(t, error);
-			const raw = String(error.message);
-			return raw === localized ? "" : raw;
+			if (!error || error.code !== "INVALID_INPUT") return "";
+			const details = error.details && typeof error.details === "object" ? error.details : {};
+			const path = typeof details.path === "string" ? details.path : "";
+			const fieldKey = FIELD_LABEL_KEYS[path];
+			const field = fieldKey ? t(fieldKey) : path;
+			const reason = reasonText(t, details.reason, field);
+			if (reason) return reason;
+			if (field) return t("errors.detail.invalidField", { field });
+			return "";
 		}
 
 		// ── formatting ─────────────────────────────────────────────────────
@@ -1322,7 +1448,7 @@ window.__ModuleLoader__.load({
 			return h(
 				React.Fragment,
 				null,
-				h(Button, { onClick: copy, ariaLabel: t("aria.copy", { label }), title }, text),
+				h(Button, { onClick: copy, ariaLabel: t("aria.copy", { label }), title: text }, text),
 				h("span", { className: "dsh-hm-sr-only", role: "status" }, state === "copied" ? t("actions.copied") : "")
 			);
 		}

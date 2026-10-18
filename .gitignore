@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+*.tsbuildinfo
+
+# Local runtime data
+*.jsonl
+!sample_memories.jsonl
+*.lock
+_snapshots/
+_proposals/
+
+# Editor and OS files
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Logs
+*.log

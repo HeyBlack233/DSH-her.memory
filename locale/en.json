@@ -1,0 +1,6 @@
+{
+	"meta": {
+		"title": "Her Memory",
+		"description": "Persistent companion memory with a human-readable JSONL store, hybrid retrieval, and proposal-based consolidation."
+	}
+}

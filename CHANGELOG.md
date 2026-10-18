@@ -14,5 +14,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Initial repository scaffolding: development guide, documentation index, and changelog.
+- Native JavaScript her.memory engine: JSONL store with cross-process locking and atomic writes, hybrid BM25 + embedding retrieval fused with reciprocal rank fusion, energy and archive lifecycle, supersede chains, retrieval-hit logging, and content version stamps.
+- Four model tools: `memory_search`, `memory_add`, `memory_update`, and `memory_archive`, with DSH session/tool provenance.
+- Four runtime skills: `her-memory`, `memory-recall`, `memory-capture`, and `memory-curation`, plus a short system-prompt pointer.
+- Localized settings sidebar page (`settings.section`) with Overview, Memories, Curation, and Settings tabs in English and Simplified Chinese.
+- Proposal-based consolidation with editable merged text, snapshots, restore, and a user-only permanent delete.
+- Plugin-owned `config.json` with live updates, backend adapters for Ollama, llama.cpp/OpenAI-compatible, and keyword-only mode, plus embedding backfill.
+- Unit and integration tests with a local fake backend, and a separate `her-memory-test` verification profile workflow.
 
 ### Contributors

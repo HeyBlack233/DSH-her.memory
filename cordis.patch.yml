@@ -1,0 +1,10 @@
+# Bundle patch for @local/dsh-her-memory.
+#
+# The plugin resolves its own data home under $DSH_HOME/her-memory. To override
+# it, add a config block to this row:
+#
+#   config:
+#     home: /absolute/path/to/her-memory
+- insert:
+    - id: her-memory
+      name: '@local/dsh-her-memory'

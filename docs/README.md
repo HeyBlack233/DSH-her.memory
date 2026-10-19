@@ -18,4 +18,6 @@ document covers exactly one concern. All documents are written in English.
 | [consolidation.md](consolidation.md) | Proposal generation, review, execution, snapshots, restore, and deletion. |
 | [security-and-privacy.md](security-and-privacy.md) | Local API trust checks, secret handling, consent, and destructive actions. |
 | [testing-and-verification.md](testing-and-verification.md) | Test strategy, fake backend, commands, and live verification. |
+| [ci.md](ci.md) | GitHub Actions workflow, triggers, Node matrix, and checks. |
+| [release-automation.md](release-automation.md) | Tag and GitHub Release creation after CI succeeds on `main`. |
 | [verification-profile.md](verification-profile.md) | Creating and running the separate `her-memory-test` profile. |

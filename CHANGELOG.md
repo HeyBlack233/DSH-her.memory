@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Proposal-based consolidation with editable merged text, snapshots, restore, and a user-only permanent delete.
 - Plugin-owned `config.json` with live updates, backend adapters for Ollama, llama.cpp/OpenAI-compatible, and keyword-only mode, plus embedding backfill.
 - Unit and integration tests with a local fake backend, and a separate `her-memory-test` verification profile workflow.
+- GitHub Actions CI workflow that runs static checks and the full test suite on Node.js 22 and 24 when a release lands on `main`.
+- Release automation: after CI succeeds on `main`, the top `CHANGELOG.md` entry is validated against `package.json`, tagged `v<version>`, and published as a GitHub Release titled `DSH-her.memory v<version>`.
 
 ### Changed
 

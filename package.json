@@ -29,7 +29,7 @@
   },
   "scripts": {
     "test": "node --test test/*.test.js",
-    "check": "for f in index.js client.js lib/*.js test/*.js; do node --check \"$f\" || exit 1; done"
+    "check": "for f in index.js client.js lib/*.js scripts/*.js test/*.js; do node --check \"$f\" || exit 1; done"
   },
   "keywords": [
     "deepseek-harness",

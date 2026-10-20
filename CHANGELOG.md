@@ -5,11 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.1.0] - 2026-10-20
 
 ### Highlights
 
-<!-- Placeholder on the dev branch. Replace at release time. -->
+- The first release of DSH her.memory, bringing persistent, human-readable companion memory to DeepSeek Harness.
 
 ### Added
 
@@ -32,5 +32,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - The Memories tab no longer crashes the whole settings section: the copy-ID button referenced an undefined `title` binding.
-
-### Contributors
